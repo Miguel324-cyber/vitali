@@ -1,26 +1,178 @@
 @import "tailwindcss";
 
+/* =========================================================
+   VITALI SALUD - CONFIGURACIÓN GLOBAL
+   ========================================================= */
+
+@theme {
+  /* =========================
+     COLORES
+     ========================= */
+
+  --color-surface: #f8fafc;
+  --color-surface-bright: #ffffff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f1f5f9;
+  --color-surface-container: #e2e8f0;
+  --color-surface-container-high: #cbd5e1;
+
+  --color-primary: #0f172a;
+  --color-primary-container: #1e293b;
+
+  --color-secondary: #0284c7;
+  --color-secondary-fixed: #e0f2fe;
+  --color-secondary-fixed-dim: #bae6fd;
+
+  --color-tertiary: #0d9488;
+
+  --color-error: #dc2626;
+  --color-error-container: #fef2f2;
+
+  --color-on-error: #ffffff;
+  --color-on-error-container: #991b1b;
+
+  --color-on-surface: #0f172a;
+  --color-on-surface-variant: #475569;
+
+  --color-on-primary: #ffffff;
+
+  --color-outline: #94a3b8;
+
+
+  /* =========================
+     ESPACIADO
+     ========================= */
+
+  --spacing-gutter: 2rem;
+
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+
+  --spacing-margin: 1.5rem;
+
+
+  /* =========================
+     BORDER RADIUS
+     ========================= */
+
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
+
+
+  /* =========================
+     FUENTES
+     ========================= */
+
+  --font-sans: var(--font-inter), sans-serif;
+  --font-headline: var(--font-plus-jakarta), sans-serif;
+
+
+  /* =========================
+     TAMAÑOS DE HEADLINES
+     ========================= */
+
+  --text-headline-xl: 3rem;
+  --text-headline-lg: 2.25rem;
+  --text-headline-sm: 1.5rem;
+
+
+  /* =========================
+     TAMAÑOS BODY
+     ========================= */
+
+  --text-body-lg: 1.125rem;
+  --text-body-md: 1rem;
+  --text-body-sm: 0.875rem;
+
+
+  /* =========================
+     TAMAÑOS LABEL
+     ========================= */
+
+  --text-label-lg: 1rem;
+  --text-label-md: 0.875rem;
+  --text-label-sm: 0.75rem;
+
+
+  /* =========================
+     DATOS NUMÉRICOS
+     ========================= */
+
+  --text-numeric-data: 0.875rem;
+}
+
+
+/* =========================================================
+   ESTILOS BASE
+   ========================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #0f172a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
+  padding: 0;
+
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  font-family: var(--font-inter), sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* =========================================================
+   HEADINGS
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-plus-jakarta), sans-serif;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   BOX SIZING
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SELECCIÓN DE TEXTO
+   ========================================================= */
+
+::selection {
+  background: #bae6fd;
+  color: #0f172a;
 }
