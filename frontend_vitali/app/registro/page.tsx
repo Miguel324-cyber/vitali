@@ -25,6 +25,12 @@ export default function RegistroPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-100 px-4 py-12">
+      <p>
+      <Link href="/" className="absolute top-4 left-4 text-[#0284C7] font-semibold hover:underline transition">
+        ← Volver a la página principal
+      </Link>
+      </p>
+      
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
         
         {/* Encabezado con el título Registro */}
