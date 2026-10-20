@@ -18,6 +18,23 @@ public class DetalleReceta {
 
     private String dosisIndicada;
 
+    @Column(name = "presentacion_id")
+    private Long presentacionId;
+
+    @Column(name = "unidades_por_dia")
+    private Double unidadesPorDia;
+
+    @Column(name = "administraciones_por_dia")
+    private Double administracionesPorDia;
+
+    @Column(name = "unidad_consumo")
+    private String unidadConsumo;
+
+    private String indicacion;
+
+    @Column(name = "dias_tratamiento")
+    private Integer diasTratamiento;
+
     public DetalleReceta() {}
 
     // Getters y Setters
@@ -32,4 +49,17 @@ public class DetalleReceta {
 
     public String getDosisIndicada() { return dosisIndicada; }
     public void setDosisIndicada(String dosisIndicada) { this.dosisIndicada = dosisIndicada; }
+
+    public Long getPresentacionId() { return presentacionId; }
+    public void setPresentacionId(Long presentacionId) { this.presentacionId = presentacionId; }
+    public Double getUnidadesPorDia() { return unidadesPorDia; }
+    public void setUnidadesPorDia(Double unidadesPorDia) { this.unidadesPorDia = unidadesPorDia; }
+    public Double getAdministracionesPorDia() { return administracionesPorDia; }
+    public void setAdministracionesPorDia(Double administracionesPorDia) { this.administracionesPorDia = administracionesPorDia; }
+    public String getUnidadConsumo() { return unidadConsumo; }
+    public void setUnidadConsumo(String unidadConsumo) { this.unidadConsumo = unidadConsumo; }
+    public String getIndicacion() { return indicacion; }
+    public void setIndicacion(String indicacion) { this.indicacion = indicacion; }
+    public Integer getDiasTratamiento() { return diasTratamiento; }
+    public void setDiasTratamiento(Integer diasTratamiento) { this.diasTratamiento = diasTratamiento; }
 }
