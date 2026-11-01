@@ -82,14 +82,14 @@ export default function VitaliLandingPage() {
               <a
                 className="text-sm font-semibold text-primary px-4 py-2.5 rounded-xl hover:bg-slate-100 transition-colors"
                 data-path="iniciar-sesion"
-                href="/login/usuario"
+                href="/login"
               >
                 Iniciar Sesión
               </a>
               <a
                 className="text-sm font-semibold bg-primary text-on-primary px-5 py-2.5 rounded-xl hover:bg-slate-800 transition-all shadow-sm hover:shadow"
                 data-path="solicitar-acceso-demo"
-                href="/registro"
+                href="/register"
               >
                 Registro
               </a>
