@@ -1,5 +1,4 @@
 package com.example.backend_vitali.config;
-
 import com.example.backend_vitali.user.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.password.PasswordEncoder;
