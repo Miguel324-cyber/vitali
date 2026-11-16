@@ -60,7 +60,10 @@ type ProfileForm = {
 };
 
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+  process.env.NEXT_PUBLIC_API_URL
+  || (process.env.NODE_ENV === "production"
+    ? "https://api-vitali.serverpalmas.cloud"
+    : "http://localhost:8080");
 
 const emptyForm: ProfileForm = {
   fullName: "",
@@ -301,9 +304,9 @@ export default function PatientProfilePage() {
         headers: {"Content-Type":"application/json", Authorization:`Bearer ${token}`},
         body: JSON.stringify({familyEmail: familyEmail.trim()}),
       });
-      const data = await response.json();
+      const data = await response.json() as { message?: string; error?: string; token?: string };
       if (!response.ok) throw new Error(data.message || data.error || "No se pudo crear la invitación.");
-      setFamilyToken(data.token);
+      setFamilyToken(data.token || "");
       setSuccess("Invitación creada. Comparte este token con tu familiar.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo crear la invitación.");

@@ -1,4 +1,7 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+  || (process.env.NODE_ENV === "production"
+    ? "https://api-vitali.serverpalmas.cloud"
+    : "http://localhost:8080");
 
 export async function fetchApi<T = any>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -10,7 +13,7 @@ export async function fetchApi<T = any>(endpoint: string, options: RequestInit =
   if (response.status === 204) return null as T;
 
   const contentType = response.headers.get("content-type") || "";
-  const payload = contentType.includes("application/json")
+  const payload: unknown = contentType.includes("application/json")
     ? await response.json().catch(() => ({}))
     : await response.text();
 
@@ -29,9 +32,14 @@ export async function fetchApi<T = any>(endpoint: string, options: RequestInit =
       }
     }
 
+    const errorPayload = typeof payload === "object" && payload !== null
+      ? payload as Record<string, unknown>
+      : {};
+    const apiMessage = [errorPayload.message, errorPayload.error, errorPayload.detail]
+      .find((value): value is string => typeof value === "string");
     const message = typeof payload === "string"
       ? payload
-      : payload.message || payload.error || payload.detail || `Error del servidor (${response.status})`;
+      : apiMessage || `Error del servidor (${response.status})`;
     const error = new Error(message) as Error & { status: number };
     error.status = response.status;
     throw error;

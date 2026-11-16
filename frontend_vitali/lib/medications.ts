@@ -1,6 +1,9 @@
 import { fetchApi } from "@/lib/api";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+  || (process.env.NODE_ENV === "production"
+    ? "https://api-vitali.serverpalmas.cloud"
+    : "http://localhost:8080");
 
 /** El catálogo usa nombres en inglés (DailyMed); se muestran en español. */
 const SPANISH: Record<string, string> = {

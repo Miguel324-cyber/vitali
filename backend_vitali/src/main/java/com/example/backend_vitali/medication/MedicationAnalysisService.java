@@ -39,15 +39,6 @@ public class MedicationAnalysisService {
     private static final Set<String> SSRI = Set.of("Fluoxetine", "Sertraline");
     private static final Set<String> CORTICOID = Set.of("Prednisone", "Dexamethasone");
 
-    /** Máximos diarios de referencia general (adultos) cuando la etiqueta del catálogo es parcial u OTC. */
-    private static final Map<String, Double> ABSOLUTE_ADULT_MAX_MG = Map.of(
-            "Acetaminophen", 4000.0,
-            "Ibuprofen", 3200.0,
-            "Diclofenac", 150.0,
-            "Omeprazole", 120.0,
-            "Loratadine", 10.0
-    );
-
     private record Rule(Set<String> a, Set<String> b, String severity, String title, String message) {}
 
     private static final List<Rule> INTERACTIONS = List.of(
@@ -276,22 +267,12 @@ public class MedicationAnalysisService {
             return c;
         }
 
-        // Límites para adultos (etiqueta + referencia general)
-        Double adultLimit = null, adultSoft = null; String adultSource = null;
+        // El límite sale exclusivamente de max_daily_dose_mg del medicamento.
+        Double adultLimit = null; String adultSource = null;
         for (Map<String, Object> r : rules) {
             Double max = num(r.get("max_daily_dose_mg"));
-            String pop = String.valueOf(r.get("target_population")).toLowerCase(Locale.ROOT);
-            String kind = String.valueOf(r.get("rule_kind"));
-            boolean pediatricOnly = !pop.contains("adult")
-                    && (pop.contains("child") || pop.contains("infant") || pop.contains("pediatric") || pop.contains("neonate"));
-            if (max == null || kind.contains("not_max") || kind.contains("not_universal") || pediatricOnly) continue;
+            if (max == null) continue;
             if (adultLimit == null || max > adultLimit) { adultLimit = max; adultSource = (String) r.get("target_population"); }
-            if (adultSoft == null || max < adultSoft) adultSoft = max;
-        }
-        Double absolute = ABSOLUTE_ADULT_MAX_MG.get(med);
-        if (absolute != null) {
-            if (adultLimit != null && adultLimit < absolute) adultSoft = adultSoft == null ? adultLimit : Math.min(adultSoft, adultLimit);
-            if (adultLimit == null || absolute > adultLimit) { adultLimit = absolute; adultSource = "Referencia general para adultos"; }
         }
 
         boolean child = age != null && age < 12;
@@ -308,12 +289,12 @@ public class MedicationAnalysisService {
             }
             limit = childLimit; limitSource = childSource; softLimit = null;
             // Sin regla pediátrica aplicable: si supera incluso el límite más bajo para adultos, es una alerta clara.
-            Double adultFloor = adultSoft != null ? adultSoft : adultLimit;
+            Double adultFloor = adultLimit;
             if (limit == null && adultFloor != null && total > adultFloor) {
                 limit = adultFloor; limitSource = "Límite para adultos (en niños el límite es menor)";
             }
         } else {
-            limit = adultLimit; softLimit = adultSoft; limitSource = adultSource;
+            limit = adultLimit; softLimit = null; limitSource = adultSource;
         }
 
         c.put("limitMgPerDay", limit == null ? null : round(limit));

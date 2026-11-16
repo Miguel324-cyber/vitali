@@ -151,7 +151,7 @@ public class AuthService {
                 registration, request.specialty().trim(), request.documentType().trim(),
                 request.documentNumber().trim(), request.phone().trim(), request.birthDate(),
                 request.university().trim(), request.graduationYear(), request.yearsExperience(),
-                request.consultationMode().trim(), request.professionalBio()
+                "VIRTUAL", request.professionalBio()
         );
 
         doctorRepository.save(profile);
